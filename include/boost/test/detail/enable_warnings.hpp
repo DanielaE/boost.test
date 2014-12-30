@@ -26,5 +26,8 @@
 # pragma warning(default: 4275) // non dll-interface class ... used as base for dll-interface class ...
 # pragma warning(default: 4267) // 'var' : conversion from 'size_t' to 'type', possible loss of data
 # pragma warning(default: 4511) // 'class' : copy constructor could not be generated
+# pragma warning(default: 4702) // unreachable code
+# pragma warning(default: 4535) // calling _set_se_translator() requires /EHa
+# pragma warning(default: 4913) // user defined binary operator ',' exists but no overload could convert all operands ...
 # pragma warning(pop)
 #endif
