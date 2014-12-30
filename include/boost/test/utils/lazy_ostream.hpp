@@ -54,10 +54,10 @@ private:
 template<typename PrevType, typename T, typename StorageT=T const&>
 class lazy_ostream_impl : public lazy_ostream {
 public:
-    lazy_ostream_impl( PrevType const& prev, T const& value )
+    lazy_ostream_impl( PrevType const& prev, T const& val )
     : lazy_ostream( false )
     , m_prev( prev )
-    , m_value( value )
+    , m_value( val )
     {
     }
 

@@ -15,6 +15,10 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 
+#ifdef BOOST_MSVC
+#pragma warning(disable: 4100) // unreferenced formal parameter
+#endif
+
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
 namespace data=boost::unit_test::data;
@@ -136,8 +140,9 @@ BOOST_DATA_TEST_CASE_F( SharedFixture, test_case_interface_08, data::make({1,2,3
 BOOST_DATA_TEST_CASE(test_case_interface_correct_file_line_declaration, samples2)
 {
   boost::unit_test::test_case const& current_test_case = boost::unit_test::framework::current_test_case();
-  BOOST_TEST(current_test_case.p_line_num == 136);
+  BOOST_TEST(current_test_case.p_line_num == 140);
   BOOST_TEST(current_test_case.p_file_name == __FILE__);
+  (void)sample;
 }
 
 //____________________________________________________________________________//

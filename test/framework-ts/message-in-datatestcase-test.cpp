@@ -36,6 +36,7 @@ std::string filenames[] = { "util/test_image1.jpg", "util/test_image2.jpg" };
 BOOST_DATA_TEST_CASE(test_update,
                      boost::unit_test::data::make(filenames))
 {
+    (void)sample;
     std::string field_name = "Volume";
     int         value = 100;
 
