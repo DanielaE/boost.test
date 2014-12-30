@@ -9,6 +9,11 @@
 #define BOOST_TEST_MODULE example49
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
+
+#ifdef _MSC_VER
+#pragma warning(disable: 4100) // unreferenced formal parameter
+#endif
+
 using namespace boost::unit_test;
 
 BOOST_DATA_TEST_CASE( free_test_function, boost::unit_test::data::xrange(1000) )
