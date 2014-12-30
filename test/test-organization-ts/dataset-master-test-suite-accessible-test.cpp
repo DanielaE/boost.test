@@ -67,7 +67,7 @@ dataset_loader::dataset_loader()
     char** argv = boost::unit_test::framework::master_test_suite().argv;
 
     // not taking into account the name of the program (first argument)
-    for(unsigned i = 1; i != argc; i++) {
+    for(int i = 1; i != argc; i++) {
         m_input_extension.push_back(argv[i]);
     }
 }
@@ -164,7 +164,7 @@ public:
       char** argv = boost::unit_test::framework::master_test_suite().argv;
 
       
-      for(unsigned i = 1; i != argc; i++) {
+      for(int i = 1; i != argc; i++) {
         std::string current(argv[i]);
         std::cout << "current " << current << std::endl;
         if(current.find("--param1") != std::string::npos) {
