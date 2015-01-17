@@ -172,14 +172,14 @@ public:
                                     floating_point_comparison_type          fpc_type = FPC_STRONG ) 
     : p_fraction_tolerance( tt_detail::fpt_abs( static_cast<FPT>(0.01)*tolerance.m_value ) )
     , p_strong_or_weak( fpc_type ==  FPC_STRONG )
-    , m_report_modifier( 100. )
+    , m_report_modifier( static_cast<FPT>(100.) )
     {}
     template<typename ToleranceBaseType>
     explicit    close_at_tolerance( fraction_tolerance_t<ToleranceBaseType> tolerance, 
                                     floating_point_comparison_type          fpc_type = FPC_STRONG ) 
-    : p_fraction_tolerance( tt_detail::fpt_abs( tolerance.m_value ) )
+    : p_fraction_tolerance( tt_detail::fpt_abs( static_cast<FPT>(tolerance.m_value) ) )
     , p_strong_or_weak( fpc_type ==  FPC_STRONG )
-    , m_report_modifier( 1. )
+    , m_report_modifier( static_cast<FPT>(1.) )
     {}
 
     predicate_result        operator()( FPT left, FPT right ) const
