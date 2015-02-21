@@ -15,10 +15,14 @@
 
 #include <cassert>
 
+#ifdef _MSC_VER
+#pragma warning(disable: 4702)
+#endif
+
 int cpp_main( int, char *[] )  // note the name
 {
     int div = 0;
-
+    (void)div;
     assert( div != 0 );
 
 #if NDEBUG 

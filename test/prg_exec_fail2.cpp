@@ -26,6 +26,9 @@
 #include <cstddef> //Metrowerks linker needs at least one standard library
 #endif
 
+#ifdef _MSC_VER
+#pragma warning(disable: 4723)
+#endif
 
 int cpp_main( int, char *[] )  // note the name
 {
