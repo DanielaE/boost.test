@@ -50,10 +50,6 @@
 #include <ios>              // for std::boolalpha
 #include <climits>          // for CHAR_BIT
 
-#ifdef BOOST_MSVC
-# pragma warning(disable: 4127) // conditional expression is constant
-#endif
-
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//

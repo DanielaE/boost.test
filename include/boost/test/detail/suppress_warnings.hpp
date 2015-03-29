@@ -30,5 +30,7 @@
 # pragma warning(disable: 4702) // unreachable code
 # pragma warning(disable: 4535) // calling _set_se_translator() requires /EHa
 # pragma warning(disable: 4913) // user defined binary operator ',' exists but no overload could convert all operands ...
+# pragma warning(disable: 4389) // signed/unsigned mismatch
+# pragma warning(disable: 4244) // conversion, possible loss of data
 #endif
 
