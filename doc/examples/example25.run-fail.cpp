@@ -8,6 +8,9 @@
 //[example_code
 #include <stdexcept>
 #include <boost/test/included/prg_exec_monitor.hpp> 
+#ifdef _MSC_VER
+#pragma warning(disable: 4702) // unreachable code
+#endif
 
 int foo() { throw std::runtime_error( "big trouble" ); }
 
