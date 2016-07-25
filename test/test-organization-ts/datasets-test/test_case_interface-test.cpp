@@ -138,6 +138,7 @@ BOOST_DATA_TEST_CASE(test_case_interface_correct_file_line_declaration, samples2
   boost::unit_test::test_case const& current_test_case = boost::unit_test::framework::current_test_case();
   BOOST_TEST(current_test_case.p_line_num == 136);
   BOOST_TEST(current_test_case.p_file_name == __FILE__);
+  (void)sample;
 }
 
 // EOF
