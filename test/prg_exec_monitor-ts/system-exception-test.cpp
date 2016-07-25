@@ -25,6 +25,9 @@
 //  when told by Metrowerks that it is safe to do so.
 #include <cstddef> //Metrowerks linker needs at least one standard library
 #endif
+#ifdef _MSC_VER
+#pragma warning(disable: 4723) // potential divide by 0
+#endif
 
 #include <cstdio>
 
