@@ -109,7 +109,7 @@ find_first_not_of( ForwardIterator1 first1, ForwardIterator1 last1,
                    Predicate pred )
 {
     while( first1 != last1 ) {
-        if( std::find_if( first2, last2, std::bind1st( pred, *first1 ) ) == last2 )
+        if( std::find_if( first2, last2, std::bind( pred, *first1, std::placeholders::_1 ) ) == last2 )
             break;
         ++first1;
     }
@@ -159,9 +159,15 @@ find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
         return last1;
 
     BidirectionalIterator1 it1 = last1;
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
     while( --it1 != first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) == last2 ) {}
 
     return it1 == first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) == last2 ? last1 : it1;
+#else
+    while( --it1 != first1 && std::find_if( first2, last2, std::bind( pred, *it1, std::placeholders::_1 ) ) == last2 ) {}
+
+    return it1 == first1 && std::find_if( first2, last2, std::bind( pred, *it1, std::placeholders::_1 ) ) == last2 ? last1 : it1;
+#endif
 }
 
 //____________________________________________________________________________//
@@ -206,9 +212,15 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
         return last1;
 
     BidirectionalIterator1 it1 = last1;
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
     while( --it1 != first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) != last2 ) {}
 
     return it1 == first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) == last2 ? last1 : it1;
+#else
+    while( --it1 != first1 && std::find_if( first2, last2, std::bind( pred, *it1, std::placeholders::_1 ) ) != last2 ) {}
+
+    return it1 == first1 && std::find_if( first2, last2, std::bind( pred, *it1, std::placeholders::_1 ) ) == last2 ? last1 : it1;
+#endif	
 }
 
 //____________________________________________________________________________//
