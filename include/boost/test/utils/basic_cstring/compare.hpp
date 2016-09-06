@@ -76,7 +76,7 @@ case_ins_eq( basic_cstring<CharT> x, basic_cstring<CharT> y )
 // ************************************************************************** //
 
 template<class CharT>
-class case_ins_less : public std::binary_function<basic_cstring<CharT>,basic_cstring<CharT>,bool>
+class case_ins_less
 {
 public:
     bool operator()( basic_cstring<CharT> x, basic_cstring<CharT> y ) const

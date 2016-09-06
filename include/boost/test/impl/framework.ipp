@@ -53,6 +53,7 @@
 #include <set>
 #include <cstdlib>
 #include <ctime>
+#include <random>
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::time; using ::srand; }
@@ -63,6 +64,15 @@ namespace std { using ::time; using ::srand; }
 //____________________________________________________________________________//
 
 namespace boost {
+namespace detail {
+
+inline std::random_device & get_common_random_device() {
+	static std::random_device generator;
+	return generator;
+}
+
+}
+
 namespace unit_test {
 namespace framework {
 namespace impl {
@@ -420,7 +430,6 @@ parse_filters( test_unit_id master_tu_id, test_unit_id_list& tu_to_enable, test_
 }
 
 //____________________________________________________________________________//
-
 } // namespace impl
 
 // ************************************************************************** //
@@ -582,12 +591,20 @@ public:
 
     typedef unit_test_monitor_t::error_level execution_result;
 
-    // Random generator using the std::rand function (seeded prior to the call)
-    struct random_generator_helper {
-      size_t operator()(size_t i) const {
-        return std::rand() % i;
-      }
-    };
+    // Random generator using the std::default_random_engine (seeded prior to the call)
+    struct random_generator_helper : public std::default_random_engine {
+		random_generator_helper() : std::default_random_engine(seed()) { rng = this; }
+		
+		result_type operator()()       { return (*rng)(); }
+		result_type operator()() const { return (*rng)(); }
+	private:	
+		static unsigned seed() {
+			unsigned s = runtime_config::get<unsigned>( runtime_config::RANDOM_SEED );
+			if (s == 1) s = ::boost::detail::get_common_random_device()();
+			return s;
+		}
+		std::default_random_engine * rng;
+	};
 
       // Executed the test tree with the root at specified test unit
     execution_result execute_test_tree( test_unit_id tu_id,
@@ -674,7 +691,7 @@ public:
 
                         const random_generator_helper& rand_gen = p_random_generator ? *p_random_generator : random_generator_helper();
 
-                        std::random_shuffle( children_with_the_same_rank.begin(), children_with_the_same_rank.end(), rand_gen );
+                        std::shuffle( children_with_the_same_rank.begin(), children_with_the_same_rank.end(), rand_gen );
 
                         BOOST_TEST_FOREACH( test_unit_id, chld, children_with_the_same_rank ) {
                             unsigned chld_timeout = child_timeout( timeout, tu_timer.elapsed() );
