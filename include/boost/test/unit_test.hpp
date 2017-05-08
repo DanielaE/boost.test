@@ -36,6 +36,48 @@
 
 #endif  // auto-linking disabled
 
+#if defined(_MSC_VER) && !defined(__CYGWIN__)
+
+extern "C" {
+#if defined(_DEBUG) && !defined(_INC_CRTDBG)
+__declspec(dllimport) int __cdecl _CrtSetReportMode(int, int);
+__declspec(dllimport) void* __cdecl _CrtSetReportFile(int, void*);
+#endif
+__declspec(dllimport) unsigned __stdcall SetErrorMode(unsigned);
+}
+
+namespace boost { namespace detail {
+
+template <typename _>
+struct error_popup_suppressor
+{
+    error_popup_suppressor() { switch_off_error_popups(); }
+
+    static void switch_off_error_popups()
+    {
+        if (!done)
+        {
+            done = true;
+#ifdef _DEBUG
+            _CrtSetReportMode(1, 1);
+            _CrtSetReportFile(1, (void*)-5);
+#endif
+            SetErrorMode(3);
+        }
+    };
+    static bool done;
+};
+template <typename _>
+bool error_popup_suppressor<_>::done = false;
+
+namespace {
+error_popup_suppressor<bool> _;
+}
+
+}}
+
+#endif
+
 // ************************************************************************** //
 // **************                  unit_test_main              ************** //
 // ************************************************************************** //
